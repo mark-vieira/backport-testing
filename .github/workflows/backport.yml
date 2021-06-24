@@ -1,12 +1,14 @@
-name: Backport
 on:
   pull_request_target:
-    branches: [master]
-    types: [closed, labeled]
+    branches:
+      - master
+    types:
+      - labeled
+      - closed
 
 jobs:
   backport:
-    name: Backport Action
+    name: Backport PR
     if: |
       github.event.pull_request.merged == true
       && contains(github.event.pull_request.labels.*.name, 'auto-backport')
@@ -16,8 +18,20 @@ jobs:
       )
     runs-on: ubuntu-latest
     steps:
-      - name: Backport
-        uses: sqren/backport-github-action@v1
+      - name: Checkout Actions
+        uses: actions/checkout@v2
         with:
-          access_token: ${{ secrets.ACCESS_TOKEN }}
-          target_pr_labels: 'backport'
+          repository: 'elastic/kibana-github-actions'
+          ref: main
+          path: ./actions
+
+      - name: Install Actions
+        run: npm install --production --prefix ./actions
+
+      - name: Run Backport
+        uses: ./actions/backport
+        with:
+          github_token: ${{secrets.ACCESS_TOKEN}}
+          commit_user: mark-vieira
+          commit_email: portugee@gmail.com
+          auto_merge: 'false'
