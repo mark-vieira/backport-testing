@@ -1,6 +1,7 @@
 name: Backport
 on:
   pull_request_target:
+    branches: [master]
     types: [closed, labeled]
 
 jobs:
