@@ -1,5 +1,5 @@
 {
-  "upstream": "elastic/elasticsearch",
+  "upstream": "mark-vieira/backport-testing",
   "targetBranchChoices": [
     { "name": "master", "checked": true },
     { "name": "7.x", "checked": true },
