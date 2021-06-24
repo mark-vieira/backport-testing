@@ -19,4 +19,4 @@ jobs:
         uses: sqren/backport-github-action@v1
         with:
           access_token: ${{ secrets.ACCESS_TOKEN }}
-          target_pr_labels: ['backport']
+          target_pr_labels: 'backport'
